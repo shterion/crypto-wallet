@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
+// Connect to Database
 const {db} = require('./db/mongoose');
 
 const app = express();
@@ -24,7 +25,8 @@ app.use('/users', users);
 
 // require('./config/passport')(passport);
 
-// app.use(express.static(path.join(__dirname, 'dist')))
+// Set Static Folder
+app.use(express.static(path.join(__dirname, 'dist')))
 
 // app.get('*', (req, res) => {
 //   res.sendFile(path.join(__dirname, 'dist/index.html'));
