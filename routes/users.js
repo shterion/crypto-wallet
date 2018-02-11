@@ -34,8 +34,11 @@ router.post('/authenticate', async (req, res) => {
 });
 
 // Profile
-router.get('/profile', (req, res) => {
-  res.send('Profile ...')
+router.post('/profile', async (req, res) => {
+  // res.send('Profile ...');
+  let id = req.body.id;
+  let user = await User.getUserById(id);
+  res.send(user);
 });
 
 module.exports = router;

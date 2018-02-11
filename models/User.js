@@ -30,6 +30,11 @@ const UserSchema = new Schema({
   }
 });
 
+UserSchema.statics.getUserById = function (id) {
+  let user = User.findOne({_id: id});
+  return user;
+}
+
 UserSchema.statics.getUserByUsername = function (username) {
   let user = User.findOne({username}).then((user) => {
     return new Promise(function(resolve, reject) {
