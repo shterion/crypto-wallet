@@ -44,10 +44,40 @@ router.post('/authenticate', async (req, res) => {
   try {
     let user = await User.getUserByUsername(username);
     if (!user) {
-      res.send('No user found');
-    } else {
-      res.send(user);
+      return res.json({success:false, msg: 'No User found!'});
     }
+
+    User.comparePassword(password, user.password).then((isMatch) => {
+      if (isMatch) {
+        const token = jwt.sign({data:user}, process.env.SECRET, {
+          expiresIn: 604800
+        });
+
+        res.send({
+          success: true,
+          token: `Token:${token}`,
+          user: {
+            id: user._id,
+            username: user.username,
+            email: user.email,
+          }
+        });
+      } else {
+        return res.json({success:false, msg: 'Wrong password!'});
+      }
+    }).catch((e) => {
+      return res.send(e);
+    })
+
+    // User.comparePassword(password, user.password, (err, isMatch) => {
+    //   if (err) {
+    //     throw err;
+    //   }
+    //   if (isMatch) {
+    //     console.log('in match');
+    //   }
+    // });
+
   } catch (e) {
     res.send(e);
   }
@@ -62,9 +92,9 @@ router.post('/profile', async (req, res) => {
     let user = await User.getUserById(id);
     // console.log(user);
     if (!user) {
-      res.send('No user found!');
+      return res.json({success:false, msg: 'No User found!'});
     } else {
-      res.send(user);
+      return res.send(user);
     }
   } catch (e) {
     res.send(e);

@@ -46,11 +46,11 @@ UserSchema.statics.getUserById = async function(id) {
   // });
 }
 
-UserSchema.statics.getUserByUsername = function(username) {
+UserSchema.statics.getUserByUsername = (username) => {
   let user = User.findOne({
     username
   }).then((user) => {
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
       resolve(user);
     });
   }).catch((e) => {
@@ -78,7 +78,22 @@ UserSchema.statics.addUser = function(newUser) {
   return currentUser;
 };
 
+UserSchema.statics.comparePassword = (candidatePassword, hash) => {
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
+      if (isMatch === true) {
+        resolve(isMatch);
+      }
+      reject();
+    });
+  });
+
+  // bcrypt.compare(password, hash, (err, isMatch) => {
+  //   if (isMatch === true) {
+  //     callback(null, isMatch);
+  //   }
+  // });
+}
+
 let User = mongoose.model('User', UserSchema);
-module.exports = {
-  User
-};
+module.exports = {User};
