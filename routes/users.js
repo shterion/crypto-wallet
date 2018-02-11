@@ -6,18 +6,24 @@ const {User} = require('./../models/User');
 
 // Register a user
 router.post('/register', async (req, res) => {
-  let newUser = new User ({
+  let newUser = new User({
     username: req.body.username,
     email: req.body.email,
     password: req.body.password
   });
-  let user = await User.addUser(newUser);
-  if (user) {
-    res.redirect('/users/signup');
-    // res.send('User already exists');
-  } else {
-    res.redirect('/users/profile');
+
+  try {
+    let user = await User.addUser(newUser);
+    if (user) {
+      res.redirect('/users/signup');
+      // res.send('User already exists');
+    } else {
+      res.redirect('/users/profile');
+    }
+  } catch (e) {
+    res.send(e);
   }
+
 });
 
 // Authenticate
@@ -26,19 +32,43 @@ router.post('/authenticate', async (req, res) => {
   let password = req.body.password;
 
   // User.getUserByUsername(username).then((user) => {
-  //   console.log(user);
-  //   res.send(user);
+  //   if (!user) {
+  //     res.send('No user found');
+  //   } else {
+  //     res.send(user);
+  //   }
+  // }).catch((e) => {
+  //   console.log(e);
   // });
-  let user = await User.getUserByUsername(username);
-  res.send(user);
+
+  try {
+    let user = await User.getUserByUsername(username);
+    if (!user) {
+      res.send('No user found');
+    } else {
+      res.send(user);
+    }
+  } catch (e) {
+    res.send(e);
+  }
+
 });
 
 // Profile
 router.post('/profile', async (req, res) => {
   // res.send('Profile ...');
   let id = req.body.id;
-  let user = await User.getUserById(id);
-  res.send(user);
+  try {
+    let user = await User.getUserById(id);
+    // console.log(user);
+    if (!user) {
+      res.send('No user found!');
+    } else {
+      res.send(user);
+    }
+  } catch (e) {
+    res.send(e);
+  }
 });
 
 module.exports = router;

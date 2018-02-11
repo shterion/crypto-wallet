@@ -30,16 +30,31 @@ const UserSchema = new Schema({
   }
 });
 
-UserSchema.statics.getUserById = function (id) {
-  let user = User.findOne({_id: id});
+UserSchema.statics.getUserById = async function(id) {
+  let user;
+  try {
+     user = await User.findOne({_id: id});
+    } catch (e) {
+      return false;
+  }
   return user;
+
+  // let user = User.findOne({_id: id}).then((user) => {
+  //   return user;
+  // }).catch((e) => {
+  //   return false;
+  // });
 }
 
-UserSchema.statics.getUserByUsername = function (username) {
-  let user = User.findOne({username}).then((user) => {
+UserSchema.statics.getUserByUsername = function(username) {
+  let user = User.findOne({
+    username
+  }).then((user) => {
     return new Promise(function(resolve, reject) {
       resolve(user);
     });
+  }).catch((e) => {
+    console.log(e);
   });
   return user;
 }
