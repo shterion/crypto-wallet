@@ -21,9 +21,13 @@ app.use(cors());
 // Body Parser Middleware
 app.use(bodyParser.json());
 
-app.use('/users', users);
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 // require('./config/passport')(passport);
+
+app.use('/users', users);
 
 // Set Static Folder
 app.use(express.static(path.join(__dirname, 'dist')))

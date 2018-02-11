@@ -4,25 +4,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const {User} = require('./../models/User');
 
-// Register
-// router.post('/register', (req, res, next) => {
-//   let newUser = new User {
-//     username: req.body.username,
-//     email: req.body.email,
-//     password: req.body.password
-//   };
-//
-//   newUser.addUser(newUser).then.((user) => {
-//     res.json({success: true, msg: 'User registered'})
-//     console.log(user);
-//   }).catch((e) => {
-//     res.json({success: false, msg: 'Failed to register user'});
-//     console.log(e);
-//   });
-//
-// });
-
-
+// Register a user
 router.post('/register', async (req, res) => {
   let newUser = new User ({
     username: req.body.username,
@@ -30,18 +12,29 @@ router.post('/register', async (req, res) => {
     password: req.body.password
   });
   let user = await User.addUser(newUser);
-  res.redirect('/users/profile');
+  if (user) {
+    res.redirect('/users/signup');
+    // res.send('User already exists');
+  } else {
+    res.redirect('/users/profile');
+  }
 });
 
-
-
 // Authenticate
-router.post('/authenticate', (req, res, next) => {
-  res.send('Authenticate ...')
+router.post('/authenticate', async (req, res) => {
+  let username = req.body.username;
+  let password = req.body.password;
+
+  // User.getUserByUsername(username).then((user) => {
+  //   console.log(user);
+  //   res.send(user);
+  // });
+  let user = await User.getUserByUsername(username);
+  res.send(user);
 });
 
 // Profile
-router.get('/profile', (req, res, next) => {
+router.get('/profile', (req, res) => {
   res.send('Profile ...')
 });
 
