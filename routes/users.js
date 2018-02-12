@@ -12,17 +12,21 @@ router.post('/register', async (req, res, next) => {
     password: req.body.password
   });
 
-  try {
-    let user = await User.addUser(newUser);
-    if (user) {
-      res.redirect('/users/signup');
-      // res.send('User already exists');
-    } else {
-      // res.redirect('/users/profile');
-      res.send('user saved...')
+  if (req.body.password != req.body.confirmPassword) {
+    res.send('Passwords don`t match!');
+  } else {
+    try {
+      let user = await User.addUser(newUser);
+      if (user) {
+        res.redirect('/users/signup');
+        // res.send('User already exists');
+      } else {
+        // res.redirect('/users/profile');
+        res.send('user saved...')
+      }
+    } catch (e) {
+      res.send(e);
     }
-  } catch (e) {
-    res.send(e);
   }
 
 });

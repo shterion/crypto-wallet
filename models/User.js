@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 
 // User Schema
-
 const UserSchema = new Schema({
   username: {
     type: String,
@@ -30,15 +29,15 @@ const UserSchema = new Schema({
   }
 });
 
-UserSchema.statics.getUserById = function (id) {
+// Get User By Id
+UserSchema.statics.getUserById = (id) => {
   let user = User.findOne({_id:id});
   return user;
 };
 
+// Get User By Username
 UserSchema.statics.getUserByUsername = (username) => {
-  let user = User.findOne({
-    username
-  }).then((user) => {
+  let user = User.findOne({username}).then((user) => {
     return new Promise((resolve, reject) => {
       resolve(user);
     });
@@ -48,7 +47,8 @@ UserSchema.statics.getUserByUsername = (username) => {
   return user;
 };
 
-UserSchema.statics.addUser = function(newUser) {
+// Register a User
+UserSchema.statics.addUser = (newUser) => {
   let currentUser = User.findOne({
     email: newUser.email
   }).then((user) => {
@@ -67,6 +67,7 @@ UserSchema.statics.addUser = function(newUser) {
   return currentUser;
 };
 
+// Compare passord
 UserSchema.statics.comparePassword = (candidatePassword, hash) => {
   return new Promise((resolve, reject) => {
     bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
