@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const {User} = require('./../models/User');
 
 // Register a user
-router.post('/register', async (req, res) => {
+router.post('/register', async (req, res, next) => {
   let newUser = new User({
     username: req.body.username,
     email: req.body.email,
@@ -18,7 +18,8 @@ router.post('/register', async (req, res) => {
       res.redirect('/users/signup');
       // res.send('User already exists');
     } else {
-      res.redirect('/users/profile');
+      // res.redirect('/users/profile');
+      res.send('user saved...')
     }
   } catch (e) {
     res.send(e);
@@ -27,7 +28,7 @@ router.post('/register', async (req, res) => {
 });
 
 // Authenticate
-router.post('/authenticate', async (req, res) => {
+router.post('/authenticate', async (req, res, next) => {
   let username = req.body.username;
   let password = req.body.password;
 
@@ -52,10 +53,9 @@ router.post('/authenticate', async (req, res) => {
         const token = jwt.sign({data:user}, process.env.SECRET, {
           expiresIn: 604800
         });
-
         res.send({
           success: true,
-          token: `Token:${token}`,
+          token: `JWT ${token}`,
           user: {
             id: user._id,
             username: user.username,
@@ -68,16 +68,6 @@ router.post('/authenticate', async (req, res) => {
     }).catch((e) => {
       return res.send(e);
     })
-
-    // User.comparePassword(password, user.password, (err, isMatch) => {
-    //   if (err) {
-    //     throw err;
-    //   }
-    //   if (isMatch) {
-    //     console.log('in match');
-    //   }
-    // });
-
   } catch (e) {
     res.send(e);
   }
@@ -85,20 +75,8 @@ router.post('/authenticate', async (req, res) => {
 });
 
 // Profile
-router.post('/profile', async (req, res) => {
-  // res.send('Profile ...');
-  let id = req.body.id;
-  try {
-    let user = await User.getUserById(id);
-    // console.log(user);
-    if (!user) {
-      return res.json({success:false, msg: 'No User found!'});
-    } else {
-      return res.send(user);
-    }
-  } catch (e) {
-    res.send(e);
-  }
+router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+  res.json({user: req.user});
 });
 
 module.exports = router;

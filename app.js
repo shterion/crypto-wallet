@@ -18,6 +18,9 @@ const users = require('./routes/users');
 // CORS Middleware
 app.use(cors());
 
+// Set Static Folder
+app.use(express.static(path.join(__dirname, 'dist')))
+
 // Body Parser Middleware
 app.use(bodyParser.json());
 
@@ -29,17 +32,10 @@ require('./config/passport')(passport);
 
 app.use('/users', users);
 
-// Set Static Folder
-app.use(express.static(path.join(__dirname, 'dist')))
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'dist/index.html'));
-// });
-
-// Index Route
-app.get('/', (req, res) => {
-  res.send('Works');
-})
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
+});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

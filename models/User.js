@@ -30,21 +30,10 @@ const UserSchema = new Schema({
   }
 });
 
-UserSchema.statics.getUserById = async function(id) {
-  let user;
-  try {
-     user = await User.findOne({_id: id});
-    } catch (e) {
-      return false;
-  }
+UserSchema.statics.getUserById = function (id) {
+  let user = User.findOne({_id:id});
   return user;
-
-  // let user = User.findOne({_id: id}).then((user) => {
-  //   return user;
-  // }).catch((e) => {
-  //   return false;
-  // });
-}
+};
 
 UserSchema.statics.getUserByUsername = (username) => {
   let user = User.findOne({
@@ -57,7 +46,7 @@ UserSchema.statics.getUserByUsername = (username) => {
     console.log(e);
   });
   return user;
-}
+};
 
 UserSchema.statics.addUser = function(newUser) {
   let currentUser = User.findOne({
@@ -87,13 +76,7 @@ UserSchema.statics.comparePassword = (candidatePassword, hash) => {
       reject();
     });
   });
-
-  // bcrypt.compare(password, hash, (err, isMatch) => {
-  //   if (isMatch === true) {
-  //     callback(null, isMatch);
-  //   }
-  // });
-}
+};
 
 let User = mongoose.model('User', UserSchema);
 module.exports = {User};
