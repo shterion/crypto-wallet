@@ -6,13 +6,13 @@
 
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="nav navbar-nav navbar-right">
-      <li class="nav-item active">
+      <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" class="nav-item active">
         <a [routerLink]="['/']" class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
+      <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" class="nav-item">
         <a [routerLink]="['/login']" class="nav-link" href="#">Login</a>
       </li>
-      <li class="nav-item">
+      <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" class="nav-item">
         <a [routerLink]="['/register']" class="nav-link" href="#">Register</a>
       </li>
     </ul>
