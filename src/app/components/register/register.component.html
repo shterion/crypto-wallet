@@ -1,22 +1,22 @@
 <div class="position-relative overflow-hidden p-3 bg-light">
   <div class="col-md-5 mx-auto my-5 container">
     <h3>Register</h3>
-    <form>
+    <form (submit)="onRegisterSubmit()">
       <fieldset>
         <div class="form-group">
           <div class="col-xs-3">
             <label for="exampleInputEmail1">Username</label>
-            <input class="form-control" id="exampleInputEmail1" placeholder="Enter username" type="text">
+            <input class="form-control" id="exampleInputEmail1" placeholder="Enter username" type="text" [(ngModel)]="username" name="username">
           </div>
         </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Email address</label>
-          <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" type="email">
+          <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" type="email" [(ngModel)]="email" name="email">
           <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Password</label>
-          <input class="form-control" id="exampleInputPassword1" placeholder="Password" type="password">
+          <input class="form-control" id="exampleInputPassword1" placeholder="Password" type="password" [(ngModel)]="password" name="password">
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Confirm Password</label>
