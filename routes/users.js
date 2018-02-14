@@ -31,7 +31,7 @@ router.post('/register', async (req, res, next) => {
 
 // Authenticate
 router.post('/authenticate', async (req, res, next) => {
-  let username = req.body.username;
+  let email = req.body.email;
   let password = req.body.password;
 
   // User.getUserByUsername(username).then((user) => {
@@ -45,7 +45,7 @@ router.post('/authenticate', async (req, res, next) => {
   // });
 
   try {
-    let user = await User.getUserByUsername(username);
+    let user = await User.getUserByEmail(email);
     if (!user) {
       return res.json({success:false, msg: 'No User found!'});
     }

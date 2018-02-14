@@ -36,8 +36,8 @@ UserSchema.statics.getUserById = (id) => {
 };
 
 // Get User By Username
-UserSchema.statics.getUserByUsername = (username) => {
-  let user = User.findOne({username}).then((user) => {
+UserSchema.statics.getUserByEmail = (email) => {
+  let user = User.findOne({email}).then((user) => {
     return new Promise((resolve, reject) => {
       resolve(user);
     });
