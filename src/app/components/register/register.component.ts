@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ValidateService } from '../../services/validate.service'
+import { ValidateService } from '../../services/validate.service';
+import { AuthService } from '../../services/auth.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +15,11 @@ export class RegisterComponent implements OnInit {
   password: String;
   confirmPassword: String;
 
-  constructor(private _validateService: ValidateService, private _flashMessagesService: FlashMessagesService) { }
+  constructor(private _authService: AuthService,
+    private _validateService: ValidateService,
+    private _flashMessagesService: FlashMessagesService,
+    private _router: Router
+  ) { }
 
   ngOnInit() {
   }
@@ -48,5 +54,15 @@ export class RegisterComponent implements OnInit {
       this._flashMessagesService.show('Password must be at least 5 characters!', { cssClass: 'alert-danger', timeout: 3000 });
       return false;
     }
+
+    this._authService.registerUser(user).subscribe(data => {
+      if(data.success) {
+        this._flashMessagesService.show('You are now registered and can log in!', { cssClass: 'alert-success', timeout: 3000 });
+        this._router.navigate(['/login']);
+      } else {
+        this._flashMessagesService.show('User already exists!', { cssClass: 'alert-danger', timeout: 3000 });
+        this._router.navigate(['/register']);
+      }
+    });
   }
 }

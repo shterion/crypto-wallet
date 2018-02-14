@@ -18,11 +18,9 @@ router.post('/register', async (req, res, next) => {
     try {
       let user = await User.addUser(newUser);
       if (user) {
-        res.redirect('/users/signup');
-        // res.send('User already exists');
+        res.json({success: false, msg: 'User already exists!'});
       } else {
-        // res.redirect('/users/profile');
-        res.send('user saved...')
+        res.json({success: true, msg: 'User registered...'});
       }
     } catch (e) {
       res.send(e);
