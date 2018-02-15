@@ -9,14 +9,16 @@ import { FlashMessagesService } from 'angular2-flash-messages';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+    isLoggedIn: boolean;
 
   constructor(
     private _authService: AuthService,
     private _router: Router,
     private _flashMessagesService: FlashMessagesService
-  ) { }
+    ) { }
 
   ngOnInit() {
+    this.isLoggedIn = false;
   }
 
   onLogoutClick() {
