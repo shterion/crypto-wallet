@@ -68,7 +68,7 @@ router.post('/authenticate', async (req, res, next) => {
         return res.json({success:false, msg: 'Wrong password!'});
       }
     }).catch((e) => {
-      return res.send(e);
+       return res.json({success: false, msg: 'Wrong password!'});
     })
   } catch (e) {
     res.send(e);
