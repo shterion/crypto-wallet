@@ -81,9 +81,10 @@ router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res,
   res.json({user: req.user});
 });
 
-router.get('/edit', (req, res, next) => {
-  console.log('TEST');
-  res.send('edit from node');
-});
+router.post('/edit', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+  let newUsername = req.body.username;
+  let email = req.user.email;
+  User.editUser(email, newUsername);
+})
 
 module.exports = router;

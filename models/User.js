@@ -67,6 +67,12 @@ UserSchema.statics.addUser = (newUser) => {
   return currentUser;
 };
 
+UserSchema.statics.editUser = async (email, newUsername) => {
+  let user = await User.getUserByEmail(email);
+  user.username = newUsername;
+  user.save();
+};
+
 // Compare passord
 UserSchema.statics.comparePassword = (candidatePassword, hash) => {
   return new Promise((resolve, reject) => {
