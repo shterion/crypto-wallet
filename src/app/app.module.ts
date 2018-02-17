@@ -16,6 +16,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -23,6 +24,8 @@ const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'dashboard', component: DashboardComponent},
   {path: 'profile', component: ProfileComponent},
+  {path: 'edit', component: EditProfileComponent}
+
 ];
 
 @NgModule({
@@ -34,7 +37,8 @@ const appRoutes: Routes = [
     RegisterComponent,
     DashboardComponent,
     ProfileComponent,
-    FooterComponent
+    FooterComponent,
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,

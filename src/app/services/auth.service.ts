@@ -33,6 +33,16 @@ export class AuthService {
       .map(res => res.json());
   }
 
+  editUser(user) {
+    this._http.get('http://localhost:3000/users/edit');
+    // let headers = new Headers();
+    // this.loadToken();
+    // headers.append('Authorization', this.authToken);
+    // headers.append('ContentType', 'application/json');
+    // return this._http.get('http://localhost:3000/users/edit', {headers})
+    //   .map(res => res.json());
+  }
+
   loadToken() {
     const token = localStorage.getItem('id_token');
     this.authToken = token;

@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const {User} = require('./../models/User');
 
 // Register a user
-router.post('/register', async (req, res, next) => {
+router.post('/users/register', async (req, res, next) => {
   let newUser = new User({
     username: req.body.username,
     email: req.body.email,
@@ -79,6 +79,11 @@ router.post('/authenticate', async (req, res, next) => {
 // Profile
 router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
   res.json({user: req.user});
+});
+
+router.get('/edit', (req, res, next) => {
+  console.log('TEST');
+  res.send('edit from node');
 });
 
 module.exports = router;

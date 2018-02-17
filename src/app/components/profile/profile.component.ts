@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class ProfileComponent implements OnInit {
   user: Object;
+
   constructor(private _authService: AuthService, private _router: Router) { }
 
   ngOnInit() {
@@ -19,6 +20,11 @@ export class ProfileComponent implements OnInit {
         console.log(err);
         return false;
       });
+
   }
+
+  lastUpdated() {
+    return new Date();
+  };
 
 }
