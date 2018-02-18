@@ -3,6 +3,7 @@ import { ValidateService } from '../../services/validate.service';
 import { AuthService } from '../../services/auth.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
+import {Observable} from 'rxjs/Rx';
 
 @Component({
   selector: 'app-edit-profile',
@@ -29,16 +30,23 @@ export class EditProfileComponent implements OnInit {
       });
   }
 
+  success(): Observable<any> {
+    return Observable.create(observer => {
+      this._flashMessagesService.show('Username was edited...', { cssClass: 'alert-success', timeout: 3000 });
+      observer.next(true);
+    });
+  }
+
   onUpdateSubmit() {
     const newUser = {
       username: this.username
     };
     this._authService.editUser(newUser).subscribe(data => {
       if (data.success) {
-        this._flashMessagesService.show('Username was edited...', { cssClass: 'alert-success', timeout: 3000 });
-        setTimeout(() => {
+        this.success().delay(3000).subscribe(() => {
           this._router.navigate(['/profile']);
-        }, 2500);
+        });
+
       } else {
         this._flashMessagesService.show('Username was not changed, please type a new username if you want to change it!', { cssClass: 'alert-danger', timeout: 6000 });      }
     });
