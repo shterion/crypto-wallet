@@ -67,11 +67,16 @@ UserSchema.statics.addUser = (newUser) => {
   return currentUser;
 };
 
+// Edit user
 UserSchema.statics.editUser = async (email, newUsername) => {
-  let user = await User.getUserByEmail(email);
-  user.username = newUsername;
-  user.save();
-  return user;
+  try {
+    let user = await User.getUserByEmail(email);
+    user.username = newUsername;
+    user.save();
+    return user;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 // Compare passord

@@ -34,22 +34,13 @@ export class AuthService {
   }
 
   editUser(user) {
-    // let headers = new Headers();
-    // this.loadToken();
-    // headers.append('Authorization', this.authToken);
-    // headers.append('ContentType', 'application/json');
-    return this._http.get('http://localhost:3000/users/test');
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('ContentType', 'application/json');
+    return this._http.post('http://localhost:3000/users/edit', user, {headers})
+      .map(res => res.json());
   }
-
-  // editUser(user) {
-  //   return this._http.get('http://localhost:3000/edit');
-  //   let headers = new Headers();
-  //   this.loadToken();
-  //   headers.append('Authorization', this.authToken);
-  //   headers.append('ContentType', 'application/json');
-  //   return this._http.get('http://localhost:3000/users/edit', {headers})
-  //     .map(res => res.json());
-  // }
 
   loadToken() {
     const token = localStorage.getItem('id_token');

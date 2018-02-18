@@ -27,8 +27,9 @@ export class EditProfileComponent implements OnInit {
     const newUser = {
       username: this.username
     };
-    console.log(newUser);
-    this._authService.editUser(newUser);
+    this._authService.editUser(newUser).subscribe(data => {
+      console.log(data);
+    });
   }
 
 }
