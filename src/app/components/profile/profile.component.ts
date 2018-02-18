@@ -9,22 +9,18 @@ import { Router } from '@angular/router';
 })
 export class ProfileComponent implements OnInit {
   user: Object;
+  updated: String;
 
   constructor(private _authService: AuthService, private _router: Router) { }
 
   ngOnInit() {
     this._authService.getProfile().subscribe(profile => {
       this.user = profile.user;
+      this.updated = profile.user.updated;
     },
       err => {
         console.log(err);
         return false;
       });
-
   }
-
-  lastUpdated() {
-    return new Date();
-  };
-
 }

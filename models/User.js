@@ -26,6 +26,10 @@ const UserSchema = new Schema({
     type: String,
     minlength: 5,
     required: true
+  },
+  updated: {
+    type: Date,
+    default: Date.now
   }
 });
 
@@ -72,6 +76,7 @@ UserSchema.statics.editUser = async (email, newUsername) => {
   try {
     let user = await User.getUserByEmail(email);
     user.username = newUsername;
+    user.updated = Date.now();
     user.save();
     return user;
   } catch (e) {
