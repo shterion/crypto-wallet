@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ValidateService } from '../../services/validate.service';
 import { AuthService } from '../../services/auth.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-profile',
@@ -11,7 +13,11 @@ export class EditProfileComponent implements OnInit {
   username: String;
   user: Object;
 
-  constructor(private _authService: AuthService) { }
+  constructor(
+    private _authService: AuthService,
+    private _flashMessagesService: FlashMessagesService,
+    private _router: Router
+  ) { }
 
   ngOnInit() {
     this._authService.getProfile().subscribe(profile => {
@@ -28,8 +34,15 @@ export class EditProfileComponent implements OnInit {
       username: this.username
     };
     this._authService.editUser(newUser).subscribe(data => {
-      console.log(data);
+      if (data.success) {
+        this._flashMessagesService.show('Username was edited...', { cssClass: 'alert-success', timeout: 3000 });
+        setTimeout(() => {
+          this._router.navigate(['/profile']);
+        }, 2500);
+      } else {
+        this._flashMessagesService.show('Username was not changed, please type a new username if you want to change it!', { cssClass: 'alert-danger', timeout: 6000 });      }
     });
+
   }
 
 }

@@ -85,8 +85,14 @@ router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res,
 router.post('/edit', passport.authenticate('jwt', {session:false}), async (req, res, next) => {
   let newUsername = req.body.username;
   let email = req.user.email;
-  let user = await User.editUser(email, newUsername);
-  res.json({username: user.username, email: user.email});
+  if (newUsername != undefined) {
+    let user = await User.editUser(email, newUsername);
+    if (user) {
+      res.json({success: true, username: user.username, email: user.email});
+    }
+  } else {
+    res.json({success: false, msg: 'Username was not changed!'});
+  }
 });
 
 module.exports = router;
