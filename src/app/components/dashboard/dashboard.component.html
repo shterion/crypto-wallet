@@ -2,5 +2,8 @@
   <!-- <button class="btn btn-success" (click)="test()">
     Click
   </button> -->
-  <div class="row"> {{coins | json}}</div>
+  <div class="row"> </div>
+    <ul class="list-group">
+      <li *ngFor="let coin of coins" class="list-group-item list-group-item-action">{{coin}}</li>
+    </ul>
 </div>
