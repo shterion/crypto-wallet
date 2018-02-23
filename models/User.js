@@ -30,7 +30,10 @@ const UserSchema = new Schema({
   updated: {
     type: Date,
     default: Date.now
-  }
+  },
+  coins: [{
+    type: String
+  }]
 });
 
 // Get User By Id

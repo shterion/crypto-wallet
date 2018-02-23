@@ -127,6 +127,16 @@ router.post('/edit', passport.authenticate('jwt', {
   }
 });
 
+// Dashboard
+router.get('/dashboard', passport.authenticate('jwt', {session: false}),(req, res, next) => {
+  let user = {
+    username: req.user.username,
+    coins: req.user.coins
+  };
+  res.json({user});
+});
+
+// Add coin
 router.post('/add-coin', (req, res, next) => {
   let coin = new Coin({
     id: req.body.id,
