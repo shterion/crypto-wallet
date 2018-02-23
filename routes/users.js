@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const {User} = require('./../models/User');
+const {Coin} = require('./../models/Coin');
 
 // Register a user
 router.post('/register', async (req, res, next) => {
@@ -124,6 +125,16 @@ router.post('/edit', passport.authenticate('jwt', {
       msg: 'Username was not changed!'
     });
   }
+});
+
+router.post('/add-coin', (req, res, next) => {
+  let coin = new Coin({
+    id: req.body.id,
+    name: req.body.name
+  });
+  Coin.saveCoin(coin).then((newCoin) => {
+    console.log(newCoin);
+  });
 });
 
 module.exports = router;
