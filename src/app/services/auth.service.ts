@@ -8,19 +8,21 @@ export class AuthService {
   authToken: any;
   user: any;
 
-  constructor(private _http: Http) { }
+  constructor(private http: Http) { }
 
   registerUser(user) {
     let headers = new Headers();
     headers.append('ContentType', 'application/json');
-    return this._http.post('http://localhost:3000/users/register', user, {headers})
+
+    return this.http.post('http://localhost:3000/users/register', user, {headers})
       .map(res => res.json());
   }
 
   authenticateUser(user) {
     let headers = new Headers();
     headers.append('ContentType', 'application/json');
-    return this._http.post('http://localhost:3000/users/authenticate', user, {headers})
+
+    return this.http.post('http://localhost:3000/users/authenticate', user, {headers})
       .map(res => res.json());
   }
 
@@ -29,7 +31,8 @@ export class AuthService {
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('ContentType', 'application/json');
-    return this._http.get('http://localhost:3000/users/profile', {headers})
+
+    return this.http.get('http://localhost:3000/users/profile', {headers})
       .map(res => res.json());
   }
 
@@ -38,13 +41,24 @@ export class AuthService {
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('ContentType', 'application/json');
-    return this._http.post('http://localhost:3000/users/edit', user, {headers})
+
+    return this.http.post('http://localhost:3000/users/edit', user, {headers})
       .map(res => res.json());
   }
 
   loadToken() {
     const token = localStorage.getItem('id_token');
     this.authToken = token;
+  }
+
+  getUserCoins() {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('ContentType', 'application/json');
+
+    return this.http.get('http://localhost:3000/users/dashboard', {headers})
+      .map(res => res.json());
   }
 
   storeUserData(token, user) {

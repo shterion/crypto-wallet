@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,12 +9,18 @@ import { ApiService } from '../../services/api.service';
 })
 export class DashboardComponent implements OnInit {
 
-  private coin;
+  private coins;
 
-  constructor(private _apiService: ApiService) { }
+  constructor(
+    private apiService: ApiService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
-    this._apiService.getCoin()
-    .subscribe(data => this.coin = data);
+    // this.apiService.getCoin()
+    // .subscribe(data => this.coin = data);
+
+    this.authService.getUserCoins()
+    .subscribe(data => this.coins = data);
   }
 }
