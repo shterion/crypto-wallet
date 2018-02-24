@@ -10,10 +10,10 @@ export class ApiService {
 
   constructor(private http: Http) { }
 
-  getCoin() {
-    this.url = 'https://api.coinmarketcap.com/v1/ticker/bitcoin/';
+  getCoin(coin) {
+    this.url = `https://api.coinmarketcap.com/v1/ticker/${coin}/`;
     return this.http.get(this.url)
-    .map((res) => res.json());
+     .map((res) => res.json());
   }
 
 }
