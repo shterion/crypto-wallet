@@ -14,6 +14,6 @@ export class ApiService {
     this.url = `https://api.coinmarketcap.com/v1/ticker/${coin}/`;
     return this.http.get(this.url)
      .map((res) => res.json());
-  }
+    }
 
 }

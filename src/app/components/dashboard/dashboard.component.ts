@@ -9,7 +9,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class DashboardComponent implements OnInit {
 
-  private coins;
+  private coins = [];
 
   constructor(
     private apiService: ApiService,
@@ -17,10 +17,17 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.apiService.getCoin()
-    // .subscribe(data => this.coin = data);
+    this.fetchCoins();
+  }
 
+  fetchCoins() {
     this.authService.getUserCoins()
-    .subscribe(data => this.coins = data);
+      .subscribe(data =>
+        data.forEach((coin) => {
+          this.apiService.getCoin(coin)
+            .subscribe(data => {
+              this.coins.push(data);
+            });
+        }));
   }
 }

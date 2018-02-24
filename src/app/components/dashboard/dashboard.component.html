@@ -1,9 +1,11 @@
 <div class="container">
-  <!-- <button class="btn btn-success" (click)="test()">
+  <!-- <button class="btn btn-success" (click)="fetchCoins()">
     Click
   </button> -->
-  <div class="row"> </div>
+  <div class="row">
     <ul class="list-group">
-      <li *ngFor="let coin of coins" class="list-group-item list-group-item-action">{{coin}}</li>
+      <li *ngFor="let coin of coins" class="list-group-item list-group-item-action">{{coin[0].name}} {{coin[0].symbol}}</li>
+
     </ul>
+  </div>
 </div>
