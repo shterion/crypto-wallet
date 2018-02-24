@@ -129,17 +129,19 @@ router.post('/edit', passport.authenticate('jwt', {
 
 // Dashboard
 router.get('/dashboard', passport.authenticate('jwt', {session: false}),(req, res, next) => {
+  // console.log(req.user.coins);
   res.json(req.user.coins);
 });
 
 // Add coin
-router.post('/add-coin', (req, res, next) => {
+router.post('/add-coin', passport.authenticate('jwt', {session: false}), async (req, res, next) => {
   let coin = new Coin({
     id: req.body.id,
     name: req.body.name
   });
-  Coin.saveCoin(coin).then((newCoin) => {
-    console.log(newCoin);
+  let user = await User.getUserByEmail(req.user.email);
+  User.addCoin(user, coin).then((coin) => {
+    console.log(coin);
   });
 });
 
