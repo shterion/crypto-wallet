@@ -1,7 +1,7 @@
 <div class="container">
-  <!-- <button class="btn btn-success" (click)="fetchCoins()">
-    Click
-  </button> -->
+  <button class="btn btn-success" (click)="addCoin()">
+    Add coin
+  </button>
   <div class="row">
     <ul class="list-group">
       <li *ngFor="let coin of coins" class="list-group-item list-group-item-action">{{coin[0].name}} {{coin[0].symbol}}</li>

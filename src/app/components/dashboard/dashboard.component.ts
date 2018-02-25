@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
+import { Http, Headers } from '@angular/http';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,10 +25,14 @@ export class DashboardComponent implements OnInit {
     this.authService.getUserCoins()
       .subscribe(data =>
         data.forEach((coin) => {
-          this.apiService.getCoin(coin)
+          this.apiService.getCoin(coin.name)
             .subscribe(data => {
               this.coins.push(data);
             });
-        }));
+        })
+      );
+  }
+
+  addCoin() {
   }
 }
