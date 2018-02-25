@@ -32,7 +32,14 @@ const UserSchema = new Schema({
     default: Date.now
   },
   coins: [{
-    type: String
+    id: {
+      type: String,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    }
   }]
 });
 
@@ -98,6 +105,32 @@ UserSchema.statics.comparePassword = (candidatePassword, hash) => {
     });
   });
 };
+
+// Add a coin
+UserSchema.statics.addCoin = (user, coin) => {
+  let userCoins = user.coins;
+  let searchCoin;
+
+  userCoins.forEach((currentCoin) => {
+    if ((currentCoin.id == coin.id && currentCoin.name == coin.name) ||
+        currentCoin.id == coin.id || currentCoin.name == coin.name) {
+      console.log('Coin already exists...');
+      searchCoin = currentCoin;
+    }
+    return searchCoin;
+  });
+
+  if (!searchCoin) {
+    user.coins.push(coin);
+    return user.save().then(() => {
+      return coin;
+    });
+  } else {
+    return new Promise((resolve, reject) => {
+      resolve(false);
+    });
+  }
+}
 
 let User = mongoose.model('User', UserSchema);
 module.exports = {User};
