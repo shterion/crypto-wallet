@@ -34,5 +34,6 @@ export class DashboardComponent implements OnInit {
   }
 
   addCoin() {
+    
   }
 }
