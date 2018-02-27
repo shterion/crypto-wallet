@@ -145,6 +145,8 @@ router.post('/add-coin', passport.authenticate('jwt', {session: false}), async (
     } else {
       res.json({success: false, msg: 'Coin already exists!'});
     }
+  }).catch((e) => {
+    console.log(e);
   });
 });
 

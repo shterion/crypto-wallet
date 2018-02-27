@@ -61,6 +61,16 @@ export class AuthService {
       .map(res => res.json());
   }
 
+  addCoin() {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('ContentType', 'application/json');
+
+    return this.http.post('http://localhost:3000/users/add-coin', {headers})
+      .map(res => res.json());
+  }
+
   storeUserData(token, user) {
     localStorage.setItem('id_token', token);
     localStorage.setItem('user', JSON.stringify(user));

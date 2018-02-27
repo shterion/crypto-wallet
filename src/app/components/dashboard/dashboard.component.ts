@@ -11,6 +11,7 @@ import { Http, Headers } from '@angular/http';
 export class DashboardComponent implements OnInit {
 
   private coins = [];
+  currentCoin: String;
 
   constructor(
     private apiService: ApiService,
@@ -34,6 +35,8 @@ export class DashboardComponent implements OnInit {
   }
 
   addCoin() {
-    
+    const newCoin = this.currentCoin;
+    console.log(newCoin);
   }
+
 }

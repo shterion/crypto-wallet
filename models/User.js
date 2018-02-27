@@ -34,7 +34,7 @@ const UserSchema = new Schema({
   coins: [{
     id: {
       type: String,
-      required: true
+      required: false
     },
     name: {
       type: String,
@@ -127,7 +127,7 @@ UserSchema.statics.addCoin = (user, coin) => {
     });
   } else {
     return new Promise((resolve, reject) => {
-      resolve(false);
+      reject();
     });
   }
 }
