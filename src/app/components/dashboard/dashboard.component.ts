@@ -11,7 +11,8 @@ import { Http, Headers } from '@angular/http';
 export class DashboardComponent implements OnInit {
 
   private coins = [];
-  currentCoin: String;
+  currentCoin: any;
+  user: any;
 
   constructor(
     private apiService: ApiService,
@@ -20,6 +21,13 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.fetchCoins();
+    this.authService.getProfile().subscribe(profile => {
+      this.user = profile.user;
+    },
+      err => {
+        console.log(err);
+        return false;
+      });
   }
 
   fetchCoins() {
@@ -35,8 +43,12 @@ export class DashboardComponent implements OnInit {
   }
 
   addCoin() {
-    const newCoin = this.currentCoin;
-    console.log(newCoin);
+    let newCoin = this.currentCoin;
+    // let user = this.user.email;
+    this.authService.addCoin(this.user, newCoin)
+      .subscribe(data => {
+        // console.log(data);
+      })
   }
 
 }

@@ -108,12 +108,12 @@ UserSchema.statics.comparePassword = (candidatePassword, hash) => {
 
 // Add a coin
 UserSchema.statics.addCoin = (user, coin) => {
+  // COIN is undefined
   let userCoins = user.coins;
   let searchCoin;
 
   userCoins.forEach((currentCoin) => {
-    if ((currentCoin.id == coin.id && currentCoin.name == coin.name) ||
-        currentCoin.id == coin.id || currentCoin.name == coin.name) {
+    if (currentCoin.name == coin) {
       console.log('Coin already exists...');
       searchCoin = currentCoin;
     }
@@ -123,6 +123,7 @@ UserSchema.statics.addCoin = (user, coin) => {
   if (!searchCoin) {
     user.coins.push(coin);
     return user.save().then(() => {
+      console.log(coin);
       return coin;
     });
   } else {
