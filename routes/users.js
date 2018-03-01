@@ -134,16 +134,14 @@ router.get('/dashboard', passport.authenticate('jwt', {session: false}),(req, re
 
 // Add coin
 router.post('/add-coin', passport.authenticate('jwt', {session: false}), async (req, res, next) => {
-  //TODO: input ?
+
   let coin = new Coin({
-    id: req.body.id,
+    // id: req.body.id,
     name: req.body.name
   });
-  // COIN is undefined
-
+  
   let user = await User.getUserByEmail(req.user.email);
-  User.addCoin(user, req.body.coin).then((coin) => {
-    console.log('HERE: ', coin);
+  User.addCoin(user, coin).then((coin) => {
     if (coin) {
       res.json({success: true, id:coin.id, name:coin.name});
     } else {
