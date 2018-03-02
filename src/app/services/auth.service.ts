@@ -62,9 +62,9 @@ export class AuthService {
   }
 
   addCoin(user, newCoin) {
-    //TODO: COIN is undefined
-    let test = {
-      user: user,
+
+    let data = {
+      user,
       coin: newCoin
     };
 
@@ -73,7 +73,7 @@ export class AuthService {
     headers.append('Authorization', this.authToken);
     headers.append('ContentType', 'application/json');
 
-    return this.http.post('http://localhost:3000/users/add-coin', test, {headers})
+    return this.http.post('http://localhost:3000/users/add-coin', data, {headers})
       .map(res => res.json());
   }
 

@@ -44,11 +44,11 @@ export class DashboardComponent implements OnInit {
 
   addCoin() {
     let newCoin = this.currentCoin;
-    // let user = this.user.email;
-    
-    this.authService.addCoin(this.user, newCoin)
+    let user = this.user;
+
+    this.authService.addCoin(user, newCoin)
       .subscribe(data => {
-        // console.log(data);
+        console.log(data);
       })
   }
 
