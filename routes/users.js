@@ -153,4 +153,17 @@ router.post('/add-coin', passport.authenticate('jwt', {session: false}), async (
   });
 });
 
+// Delete coin
+router.delete('/coin/:id', passport.authenticate('jwt', {session: false}), async (req, res, next) => {
+  let user = await User.findOne({_id: req.user._id});
+  let deleteCoin = req.params.id;
+
+  user.coins.forEach((coin) => {
+    if (coin._id == deleteCoin) {
+      console.log('here');
+    }
+  });
+
+});
+
 module.exports = router;
