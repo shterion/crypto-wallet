@@ -137,7 +137,7 @@ router.post('/add-coin', passport.authenticate('jwt', {session: false}), async (
 
   let coin = new Coin({
     id: req.body.id,
-    name: req.body.coin
+    name: req.body.name
   });
 
   let user = await User.getUserByEmail(req.user.email);
@@ -157,13 +157,9 @@ router.post('/add-coin', passport.authenticate('jwt', {session: false}), async (
 router.delete('/coin/:id', passport.authenticate('jwt', {session: false}), async (req, res, next) => {
   let user = await User.findOne({_id: req.user._id});
   let deleteCoin = req.params.id;
-
-  user.coins.forEach((coin) => {
-    if (coin._id == deleteCoin) {
-      console.log('here');
-    }
-  });
-
+  let afterDelete = await User.deleteCoin(user, deleteCoin);
+  res.json({success: true, user: afterDelete});
+  //TODO: Error handling
 });
 
 module.exports = router;

@@ -45,13 +45,17 @@ const UserSchema = new Schema({
 
 // Get User By Id
 UserSchema.statics.getUserById = (id) => {
-  let user = User.findOne({_id:id});
+  let user = User.findOne({
+    _id: id
+  });
   return user;
 };
 
 // Get User By Username
 UserSchema.statics.getUserByEmail = (email) => {
-  let user = User.findOne({email}).then((user) => {
+  let user = User.findOne({
+    email
+  }).then((user) => {
     return new Promise((resolve, reject) => {
       resolve(user);
     });
@@ -131,6 +135,24 @@ UserSchema.statics.addCoin = (user, coin) => {
     });
   }
 }
+
+// Delete coin
+UserSchema.statics.deleteCoin = async (user, coin) => {
+  await User.findOne({_id: user.id}).then((res) => {
+    res.coins.forEach((currentCoin) => {
+      if (currentCoin._id == coin) {
+        let index = user.coins.map((el) => {
+          return el._id;
+        }).indexOf(coin);
+        //TODO: Error handling
+        user.coins.splice(index, 1);
+        user.save();
+      }
+    });
+  });
+  return user;
+};
+
 
 let User = mongoose.model('User', UserSchema);
 module.exports = {User};
