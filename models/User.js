@@ -31,6 +31,10 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  modified: {
+    type: Boolean,
+    default: true
+  },
   coins: [{
     id: {
       type: String,
@@ -144,9 +148,11 @@ UserSchema.statics.deleteCoin = async (user, coin) => {
         let index = user.coins.map((el) => {
           return el._id;
         }).indexOf(coin);
-        //TODO: Error handling
         user.coins.splice(index, 1);
         user.save();
+        return user;
+      } else {
+        user.modified = false;
       }
     });
   });

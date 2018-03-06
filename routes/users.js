@@ -74,6 +74,7 @@ router.post('/authenticate', async (req, res, next) => {
             id: user._id,
             username: user.username,
             email: user.email,
+            coins: user.coins
           }
         });
       } else {
@@ -98,9 +99,7 @@ router.post('/authenticate', async (req, res, next) => {
 router.get('/profile', passport.authenticate('jwt', {
   session: false
 }), (req, res, next) => {
-  res.json({
-    user: req.user
-  });
+  res.json({user: req.user});
 });
 
 // Edit profile
@@ -158,8 +157,11 @@ router.delete('/coin/:id', passport.authenticate('jwt', {session: false}), async
   let user = await User.findOne({_id: req.user._id});
   let deleteCoin = req.params.id;
   let afterDelete = await User.deleteCoin(user, deleteCoin);
-  res.json({success: true, user: afterDelete});
-  //TODO: Error handling
+  if (user.modified) {
+    res.json({success: true, user: afterDelete});
+  } else {
+    res.json({success: false, msg: `There is no coin with id ${deleteCoin}`});
+  }
 });
 
 module.exports = router;
