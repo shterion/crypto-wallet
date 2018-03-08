@@ -121,7 +121,6 @@ UserSchema.statics.addCoin = (user, coin) => {
 
   userCoins.forEach((currentCoin) => {
     if (currentCoin.name == coin.name) {
-      // console.log(currentCoin.name);
       console.log('Coin already exists...');
       searchCoin = currentCoin;
     }
@@ -149,10 +148,12 @@ UserSchema.statics.deleteCoin = async (user, coin) => {
           return el._id;
         }).indexOf(coin);
         user.coins.splice(index, 1);
+        user.modified = true;
         user.save();
         return user;
       } else {
         user.modified = false;
+        return user;
       }
     });
   });

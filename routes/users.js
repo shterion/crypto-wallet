@@ -156,9 +156,9 @@ router.post('/add-coin', passport.authenticate('jwt', {session: false}), async (
 router.delete('/coin/:id', passport.authenticate('jwt', {session: false}), async (req, res, next) => {
   let user = await User.findOne({_id: req.user._id});
   let deleteCoin = req.params.id;
-  let afterDelete = await User.deleteCoin(user, deleteCoin);
-  if (user.modified) {
-    res.json({success: true, user: afterDelete});
+  let modifiedUser = await User.deleteCoin(user, deleteCoin);
+  if (modifiedUser.modified) {
+    res.json({success: true, user: modifiedUser});
   } else {
     res.json({success: false, msg: `There is no coin with id ${deleteCoin}`});
   }
