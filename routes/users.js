@@ -157,6 +157,7 @@ router.delete('/coin/:id', passport.authenticate('jwt', {session: false}), async
   let user = await User.findOne({_id: req.user._id});
   let deleteCoin = req.params.id;
   let modifiedUser = await User.deleteCoin(user, deleteCoin);
+  // console.log(`USER: ${modifiedUser}`);
   if (modifiedUser.modified) {
     res.json({success: true, user: modifiedUser});
   } else {

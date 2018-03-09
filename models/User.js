@@ -142,20 +142,43 @@ UserSchema.statics.addCoin = (user, coin) => {
 // Delete coin
 UserSchema.statics.deleteCoin = async (user, coin) => {
   await User.findOne({_id: user.id}).then((res) => {
-    res.coins.forEach((currentCoin) => {
+
+    for (const currentCoin of res.coins) {
+
       if (currentCoin._id == coin) {
-        let index = user.coins.map((el) => {
-          return el._id;
-        }).indexOf(coin);
-        user.coins.splice(index, 1);
-        user.modified = true;
-        user.save();
-        return user;
-      } else {
-        user.modified = false;
-        return user;
+          let index = user.coins.map((el) => {
+            return el._id;
+          }).indexOf(coin);
+          user.coins.splice(index, 1);
+          user.modified = true;
+          console.log('FLAG 1');
+          user.save();
+          break;
+        } else {
+          user.modified = false;
+          console.log('FLAG 2');
+          user.save();
+        }
       }
-    });
+      // return user;
+
+    // res.coins.forEach((currentCoin) => {
+    //   if (currentCoin._id == coin) {
+    //     let index = user.coins.map((el) => {
+    //       return el._id;
+    //     }).indexOf(coin);
+    //     user.coins.splice(index, 1);
+    //     user.modified = true;
+    //     user.save();
+    //     return user;
+    //   } else {
+    //     user.modified = false;
+    //     return user;
+    //   }
+    //   return user;
+    // });
+  }).catch((e) => {
+    console.log(`BLAH...': ${e}`);
   });
   return user;
 };
