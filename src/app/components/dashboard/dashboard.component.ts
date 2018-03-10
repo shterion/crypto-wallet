@@ -52,4 +52,8 @@ export class DashboardComponent implements OnInit {
       })
   }
 
+  removeCoin(coin) {
+    console.log(coin);
+  }
+
 }

@@ -143,9 +143,23 @@ UserSchema.statics.addCoin = (user, coin) => {
 UserSchema.statics.deleteCoin = async (user, coin) => {
   await User.findOne({_id: user.id}).then((res) => {
 
+    // for (var i = 0; i < res.coins.length; i++) {
+    //
+    //   if (res.coins[i]._id == coin) {
+    //     user.coins.splice(i, 1);
+    //     user.modified = true;
+    //     user.save();
+    //   } else {
+    //     user.modified = false;
+    //     user.save();
+    //   }
+    // }
+
     for (const currentCoin of res.coins) {
 
-      if (currentCoin._id == coin) {
+      let plainCoin = currentCoin.name.toLowerCase();
+
+      if (plainCoin == coin) {
           let index = user.coins.map((el) => {
             return el._id;
           }).indexOf(coin);
@@ -160,7 +174,9 @@ UserSchema.statics.deleteCoin = async (user, coin) => {
           user.save();
         }
       }
-      // return user;
+    // return user;
+
+
 
     // res.coins.forEach((currentCoin) => {
     //   if (currentCoin._id == coin) {

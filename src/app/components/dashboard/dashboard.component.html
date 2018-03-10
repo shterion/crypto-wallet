@@ -13,7 +13,7 @@
 <br>
   <div class="row">
     <ul class="list-group">
-      <li *ngFor="let coin of coins" class="list-group-item list-group-item-action">{{coin[0].name}} {{coin[0].symbol}}</li>
+      <li *ngFor="let coin of coins" class="list-group-item list-group-item-action">{{coin[0].name}} {{coin[0].symbol}}   <button class="btn red" type="" (click)="removeCoin(coin[0].id)"><i class="fa fa-remove"></i> Delete</button> </li>
     </ul>
   </div>
 

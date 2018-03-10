@@ -135,8 +135,8 @@ router.get('/dashboard', passport.authenticate('jwt', {session: false}),(req, re
 router.post('/add-coin', passport.authenticate('jwt', {session: false}), async (req, res, next) => {
 
   let coin = new Coin({
-    id: req.body.id,
-    name: req.body.name
+    // id: req.body.id,
+    name: req.body.coin
   });
 
   let user = await User.getUserByEmail(req.user.email);
