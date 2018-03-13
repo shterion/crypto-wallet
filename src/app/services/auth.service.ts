@@ -77,6 +77,17 @@ export class AuthService {
       .map(res => res.json());
   }
 
+  deleteCoin(coin) {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('ContentType', 'application/json');
+    let url = 'http://localhost:3000/users/coin/'+coin;
+
+    return this.http.delete(url, {headers})
+      .map(res => res.json());
+  }
+
   storeUserData(token, user) {
     localStorage.setItem('id_token', token);
     localStorage.setItem('user', JSON.stringify(user));

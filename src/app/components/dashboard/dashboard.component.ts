@@ -53,7 +53,9 @@ export class DashboardComponent implements OnInit {
   }
 
   removeCoin(coin) {
-    console.log(coin);
+    this.authService.deleteCoin(coin).subscribe(data => {
+      console.log(data);
+    });
   }
 
 }

@@ -19,7 +19,7 @@ const users = require('./routes/users');
 app.use(cors());
 
 // Set Static Folder
-app.use(express.static(path.join(__dirname, 'dist')))
+app.use(express.static(path.join(__dirname, 'dist')));
 
 // Body Parser Middleware
 app.use(bodyParser.json());

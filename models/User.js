@@ -165,18 +165,14 @@ UserSchema.statics.deleteCoin = async (user, coin) => {
           }).indexOf(coin);
           user.coins.splice(index, 1);
           user.modified = true;
-          console.log('FLAG 1');
           user.save();
           break;
         } else {
           user.modified = false;
-          console.log('FLAG 2');
           user.save();
         }
       }
     // return user;
-
-
 
     // res.coins.forEach((currentCoin) => {
     //   if (currentCoin._id == coin) {
